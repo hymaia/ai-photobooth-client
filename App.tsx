@@ -1,20 +1,22 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, ScrollView, Text, Pressable } from "react-native";
 import Button from "./components/Button";
-import ImageViewer from "./components/ImageViewer";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import IconButton from "./components/IconButton";
 import CircleButton from "./components/CircleButton";
+import ImageViewer from "./components/ImageViewer";
 import createFormData from "./services/CreateFormData";
 import axios from "axios";
 import Carousel from "./components/Carousel";
+import resizeImage from "./services/ResizeImage";
+import dataURItoBlob from "./services/DataUriToBlob";
 
 const PlaceholderImage = require("./assets/images/background-image.png");
 
 export default function App() {
   const [showAppOptions, setShowAppOptions] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedB64Image, setSelectedB64Image] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<{ photos: string[] } | null>(null);
   const [selectedCarouselIndex, setSelectedCarouselIndex] = useState<
@@ -39,17 +41,22 @@ export default function App() {
     });
 
     if (!result.canceled) {
-      setSelectedImage(result.assets[0]);
-      setShowAppOptions(true);
-      handleUploadPhotoAsync(result.assets[0]);
+      const blob = dataURItoBlob(result.assets[0].uri);
+      const resizedImage = await resizeImage(blob);
+      setSelectedB64Image(resizedImage);
     } else {
       alert("You did not select any image.");
     }
   };
 
-  const handleUploadPhotoAsync = async (image: any) => {
+  const confirmImageAsync = async () => {
+    setShowAppOptions(true);
+    await handleUploadPhotoAsync();
+  }
+
+  const handleUploadPhotoAsync = async () => {
     const SERVER_URL = "http://localhost:3000";
-    const formData = createFormData(image, { userId: "123" });
+    const formData = await createFormData(selectedB64Image, { userId: "123" });
     setIsLoading(true);
     const response = await axios.post(`${SERVER_URL}/api/upload`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
@@ -74,9 +81,15 @@ export default function App() {
               ) : null}
             </>
           ) : (
-            <View style={styles.hero}>
-              <Text>HymaBooth</Text>
-            </View>
+            <>
+              {selectedB64Image ? (
+                <ImageViewer selectedImage={selectedB64Image} />
+              ) : (
+                <View style={styles.hero}>
+                  <Text>HymaBooth</Text>
+                </View>
+              )}
+            </>
           )}
         </View>
       </View>
@@ -100,7 +113,7 @@ export default function App() {
           />
           <Button
             label="Use this photo"
-            onPress={() => setShowAppOptions(true)}
+            onPress={confirmImageAsync}
           />
         </View>
       )}

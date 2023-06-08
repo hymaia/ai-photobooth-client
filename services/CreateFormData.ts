@@ -1,4 +1,5 @@
-import { View, Image, Button, Platform } from "react-native";
+import { Platform } from "react-native";
+import resizeImage from "./ResizeImage";
 
 function dataURItoBlob(dataURI) {
   let byteString: string;
@@ -13,23 +14,16 @@ function dataURItoBlob(dataURI) {
   return new Blob([ia], { type: mimeString });
 }
 
-export default function createFormData(
-  photo: { type: string; uri: string; fileName: string },
+export default async function createFormData(
+  photo: string,
   body = {}
 ) {
   const data = new FormData();
-  let uriParts = photo.uri.split(".");
-  let fileType = uriParts[uriParts.length - 1];
 
   if (Platform.OS === "web") {
-    data.append("photo", dataURItoBlob(photo.uri));
+    const blob = dataURItoBlob(photo);
+    data.append("photo", blob);
   } else {
-    const payload = {
-      uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
-      name: `photo.${fileType}`,
-      type: `image/${fileType}`,
-    };
-    data.append("photo", dataURItoBlob(photo.uri));
   }
 
   Object.keys(body).forEach((key) => {

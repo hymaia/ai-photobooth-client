@@ -4,7 +4,7 @@ export default function ImageViewer({
   placeholderImageSource,
   selectedImage,
 }: {
-  placeholderImageSource: any;
+  placeholderImageSource?: any;
   selectedImage?: any;
 }) {
   const imageSource =
