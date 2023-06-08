@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     columnGap: 16,
+    paddingHorizontal: 16
   },
   image: {
     width: 320,

@@ -1,10 +1,12 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function IconButton({ icon, label, onPress }) {
   return (
     <Pressable style={styles.iconButton} onPress={onPress}>
-      <MaterialIcons name={icon} size={24} color="#fff" />
+      <View style={styles.circleButtonContainer}>
+        <MaterialIcons name={icon} size={24} color="#25292e" />
+      </View>
       <Text style={styles.iconButtonLabel}>{label}</Text>
     </Pressable>
   );
@@ -12,6 +14,18 @@ export default function IconButton({ icon, label, onPress }) {
 
 const styles = StyleSheet.create({
   iconButton: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  circleButtonContainer: {
+    width: 64,
+    height: 64,
+    borderWidth: 4,
+    borderColor: "#ffd33d",
+    backgroundColor: "white",
+    borderRadius: 32,
+    padding: 3,
     justifyContent: "center",
     alignItems: "center",
   },

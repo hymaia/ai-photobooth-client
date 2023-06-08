@@ -1,18 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, ScrollView, Text, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import Button from "./components/Button";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import IconButton from "./components/IconButton";
-import CircleButton from "./components/CircleButton";
 import ImageViewer from "./components/ImageViewer";
 import createFormData from "./services/CreateFormData";
 import axios from "axios";
 import Carousel from "./components/Carousel";
 import resizeImage from "./services/ResizeImage";
 import dataURItoBlob from "./services/DataUriToBlob";
-
-const PlaceholderImage = require("./assets/images/background-image.png");
 
 export default function App() {
   const [showAppOptions, setShowAppOptions] = useState(false);
@@ -52,7 +54,7 @@ export default function App() {
   const confirmImageAsync = async () => {
     setShowAppOptions(true);
     await handleUploadPhotoAsync();
-  }
+  };
 
   const handleUploadPhotoAsync = async () => {
     const SERVER_URL = "http://localhost:3000";
@@ -72,7 +74,11 @@ export default function App() {
         <View collapsable={false}>
           {showAppOptions ? (
             <>
-              {isLoading ? "Is Loading" : null}
+              {isLoading ? (
+                <View style={styles.activityIndicatorContainer}>
+                  <ActivityIndicator size="large" color="#fff" />
+                </View>
+              ) : null}
               {result ? (
                 <Carousel
                   images={result?.photos ?? []}
@@ -81,15 +87,13 @@ export default function App() {
               ) : null}
             </>
           ) : (
-            <>
+            <View style={styles.hero}>
               {selectedB64Image ? (
                 <ImageViewer selectedImage={selectedB64Image} />
               ) : (
-                <View style={styles.hero}>
-                  <Text>HymaBooth</Text>
-                </View>
+                <Text>HymaBooth</Text>
               )}
-            </>
+            </View>
           )}
         </View>
       </View>
@@ -111,10 +115,7 @@ export default function App() {
             label="Choose a photo"
             onPress={pickImageAsync}
           />
-          <Button
-            label="Use this photo"
-            onPress={confirmImageAsync}
-          />
+          <Button label="Use this photo" onPress={confirmImageAsync} />
         </View>
       )}
       <StatusBar style="auto" />
@@ -123,6 +124,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  activityIndicatorContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 40,
+    height: 320,
+  },
   hero: {
     flex: 1,
     alignItems: "center",
@@ -156,5 +163,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     flexDirection: "row",
+    columnGap: 24
   },
 });
