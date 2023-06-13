@@ -1,18 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
-import Button from "./components/Button";
+import Button from "../components/Button";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import IconButton from "./components/IconButton";
-import ImageViewer from "./components/ImageViewer";
-import createPayload from "./services/CreatePayload";
+import IconButton from "../components/IconButton";
+import ImageViewer from "../components/ImageViewer";
+import createPayload from "../services/CreatePayload";
 import axios from "axios";
-import Carousel from "./components/Carousel";
-import resizeImage from "./services/ResizeImage";
-import dataURItoBlob from "./services/DataUriToBlob";
+import Carousel from "../components/Carousel";
+import resizeImage from "../services/ResizeImage";
+import dataURItoBlob from "../services/DataUriToBlob";
 import Constants from "expo-constants";
-import downloadB64Image from "./services/DownloadB64Image";
-import shareContent from "./services/ShareContent";
+import downloadB64Image from "../services/DownloadB64Image";
+import shareContent from "../services/ShareContent";
 
 export default function App() {
   const [showAppOptions, setShowAppOptions] = useState(false);
@@ -74,6 +74,7 @@ export default function App() {
     const response = await axios.post(`${uploadUrl}`, formData, {
       headers: { "Content-Type": "application/json" },
     });
+    console.log(response.data);
     setIsLoading(false);
     setResult(response.data);
   };
