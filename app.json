@@ -27,7 +27,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "uploadUrl": "http://localhost:8010/proxy/prod/image"
+      "uploadUrl": "https://p7gagaxtvi.execute-api.eu-west-1.amazonaws.com/prod/image"
     }
   }
 }
