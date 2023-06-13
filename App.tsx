@@ -5,7 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import IconButton from "./components/IconButton";
 import ImageViewer from "./components/ImageViewer";
-import createFormData from "./services/CreateFormData";
+import createPayload from "./services/CreatePayload";
 import axios from "axios";
 import Carousel from "./components/Carousel";
 import resizeImage from "./services/ResizeImage";
@@ -69,7 +69,7 @@ export default function App() {
 
   const handleUploadPhotoAsync = async () => {
     const uploadUrl = Constants.expoConfig.extra.uploadUrl;
-    const formData = await createFormData(selectedB64Image, { userId: "123" });
+    const formData = await createPayload(selectedB64Image, { userId: "123" });
     setIsLoading(true);
     const response = await axios.post(`${uploadUrl}`, formData, {
       headers: { "Content-Type": "application/json" },
