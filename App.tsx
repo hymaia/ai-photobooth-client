@@ -12,6 +12,7 @@ import resizeImage from "./services/ResizeImage";
 import dataURItoBlob from "./services/DataUriToBlob";
 import Constants from "expo-constants";
 import downloadB64Image from "./services/DownloadB64Image";
+import shareContent from "./services/ShareContent";
 
 export default function App() {
   const [showAppOptions, setShowAppOptions] = useState(false);
@@ -33,7 +34,17 @@ export default function App() {
     setSelectedCarouselIndex(null);
   };
 
-  const onSaveImageAsync = async () => {};
+  const onSaveImage = () => {
+    if (result?.generated_images) {
+      downloadB64Image(result.generated_images, result.file_name ?? "no-name");
+    }
+  };
+
+  const onShareImageAsync = async () => {
+    if (result?.generated_images) {
+      await shareContent(result.generated_images, "Test")
+    }
+  };
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -112,7 +123,12 @@ export default function App() {
             <IconButton
               icon="save-alt"
               label="Save"
-              onPress={onSaveImageAsync}
+              onPress={onSaveImage}
+            />
+            <IconButton
+              icon="share"
+              label="Share"
+              onPress={onShareImageAsync}
             />
           </View>
         </View>
