@@ -5,7 +5,7 @@ export default function Carousel({
   images,
   onSelectIndex,
 }: {
-  images: any[];
+  images: { fileName: string | null; image: string }[];
   onSelectIndex: (index: number) => void;
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -19,7 +19,7 @@ export default function Carousel({
       <View style={styles.carousel}>
         {images.map((image, index) => (
           <Pressable
-            key={image.name}
+            key={image.fileName ?? "no-filename"}
             onPress={() => {
               setSelectedIndex(index);
               onSelectIndex(index);
@@ -27,7 +27,7 @@ export default function Carousel({
           >
             <View style={{ width: 320 }}>
               <Image
-                source={{ uri: image.data }}
+                source={{ uri: image.image }}
                 style={[
                   styles.image,
                   { borderWidth: index === selectedIndex ? 3 : 0 },
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     columnGap: 16,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   image: {
     width: 320,

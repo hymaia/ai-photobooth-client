@@ -1,10 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import Button from "./components/Button";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
@@ -15,12 +10,17 @@ import axios from "axios";
 import Carousel from "./components/Carousel";
 import resizeImage from "./services/ResizeImage";
 import dataURItoBlob from "./services/DataUriToBlob";
+import Constants from "expo-constants";
+import downloadB64Image from "./services/DownloadB64Image";
 
 export default function App() {
   const [showAppOptions, setShowAppOptions] = useState(false);
   const [selectedB64Image, setSelectedB64Image] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<{ photos: string[] } | null>(null);
+  const [result, setResult] = useState<{
+    file_name: string;
+    generated_images: string;
+  } | null>(null);
   const [selectedCarouselIndex, setSelectedCarouselIndex] = useState<
     number | null
   >(null);
@@ -57,12 +57,11 @@ export default function App() {
   };
 
   const handleUploadPhotoAsync = async () => {
-    const SERVER_URL = "http://localhost:3000";
+    const uploadUrl = Constants.expoConfig.extra.uploadUrl;
     const formData = await createFormData(selectedB64Image, { userId: "123" });
     setIsLoading(true);
-    const response = await axios.post(`${SERVER_URL}/api/upload`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-      transformRequest: (formData) => formData,
+    const response = await axios.post(`${uploadUrl}`, formData, {
+      headers: { "Content-Type": "application/json" },
     });
     setIsLoading(false);
     setResult(response.data);
@@ -81,7 +80,16 @@ export default function App() {
               ) : null}
               {result ? (
                 <Carousel
-                  images={result?.photos ?? []}
+                  images={
+                    result?.generated_images
+                      ? [
+                          {
+                            fileName: result?.file_name,
+                            image: result.generated_images,
+                          },
+                        ]
+                      : []
+                  }
                   onSelectIndex={setSelectedCarouselIndex}
                 />
               ) : null}
@@ -163,6 +171,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     flexDirection: "row",
-    columnGap: 24
+    columnGap: 24,
   },
 });

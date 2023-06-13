@@ -1,5 +1,4 @@
 import { Platform } from "react-native";
-import resizeImage from "./ResizeImage";
 
 function dataURItoBlob(dataURI) {
   let byteString: string;
@@ -18,17 +17,7 @@ export default async function createFormData(
   photo: string,
   body = {}
 ) {
-  const data = new FormData();
-
-  if (Platform.OS === "web") {
-    const blob = dataURItoBlob(photo);
-    data.append("photo", blob);
-  } else {
-  }
-
-  Object.keys(body).forEach((key) => {
-    data.append(key, body[key]);
-  });
-
-  return data;
+  return {
+    "content": photo
+  };
 }
