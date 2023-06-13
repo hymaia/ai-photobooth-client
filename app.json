@@ -25,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "uploadUrl": "http://localhost:8010/proxy/prod/image"
     }
   }
 }
