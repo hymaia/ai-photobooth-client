@@ -1,8 +1,9 @@
 export default async function createPayload(
   photo: string,
-  body = {}
+  prompt: string
 ) {
   return {
-    "content": photo
+    "content": photo,
+    prompt
   };
 }
