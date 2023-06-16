@@ -1,24 +1,24 @@
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { A } from "@expo/html-elements";
+import { Link } from "expo-router";
 
-interface ExternalLinkProps {
+interface InternalLinkProps {
   href?: string;
   theme?: "clear";
   width?: number;
   icon?: string;
 }
 
-export default function ExternalLink({
+export default function InternalLink({
   theme,
   href,
   width,
   icon,
   children,
-}: React.PropsWithChildren<ExternalLinkProps>) {
+}: React.PropsWithChildren<InternalLinkProps>) {
   if (theme === "clear") {
     return (
-      <A href={href} target="_blank" style={[styles.buttonContainer, { width: width }]}>
+      <Link href={href} target="_blank" style={[styles.buttonContainer, { width: width }]}>
         <View style={styles.button}>
           {icon ? (
             <FontAwesome
@@ -32,22 +32,22 @@ export default function ExternalLink({
             {children}
           </Text>
         </View>
-      </A>
+      </Link>
     );
   }
 
   return (
-    <A
+    <Link
       href={href}
       target="_blank"
       style={[styles.buttonContainer, { width: width }]}
     >
-      <View style={[styles.button, { backgroundColor: "#ffffff" }]}>
+      <View style={[styles.button, { backgroundColor: "#FE86A4" }]}>
         <Text style={[styles.buttonLabel, { color: "#002C41" }]}>
           {children}
         </Text>
       </View>
-    </A>
+    </Link>
   );
 }
 
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     color: "#fff",
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontFamily: "'Open Sans', sans-serif"
   },
 });
