@@ -32,7 +32,7 @@
       "faqUrl": "https://www.hymaia.com/faq-generative-ia-photobooth",
       "programmeUrl": "https://www.hymaia.com/event/evenement-special-ethical-data-ai",
       "feedbackUrl": "https://forms.gle/m6bpqi6yAohn72Rg6",
-      "uploadUrl": "https://ve7yuvy9g0.execute-api.eu-west-1.amazonaws.com/prod/image"
+      "uploadUrl": "https://p7gagaxtvi.execute-api.eu-west-1.amazonaws.com/prod/image"
     }
   }
 }
