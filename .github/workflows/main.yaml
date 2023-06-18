@@ -2,9 +2,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - build_with_anis_api_endpoint
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+      - build_with_anis_api_endpoint
 
 jobs:
   build:
