@@ -26,26 +26,10 @@ app.use(function (req, res, next) {
   setTimeout(next, 1000);
 });
 
-app.post("/api/upload", upload.single("photo"), (req, res) => {
+app.post("/prod/image", upload.single("photo"), (req, res) => {
   res.status(200).json({
-    photos: [
-      {
-        name: "a",
-        data: b64Image,
-      },
-      {
-        name: "b",
-        data: b64Image,
-      },
-      {
-        name: "c",
-        data: b64Image,
-      },
-      {
-        name: "d",
-        data: b64Image,
-      },
-    ],
+    file_name: "a",
+    generated_images: b64Image
   });
 });
 
