@@ -13,6 +13,7 @@ import ChoosePromptPage from "../components/organisms/ChoosePromptPage";
 import { LinearGradient } from "expo-linear-gradient";
 import HymadayHeader from "../svgs/HymadayHeader";
 import GeneratedImageCarouselPage from "../components/organisms/GeneratedImageCarouselPage";
+import trackWithMixpanel from "../services/TrackWithMixpanel";
 
 type PageState =
   | "Home"
@@ -64,6 +65,8 @@ export default function Page() {
   };
 
   const pickImageAsync = async () => {
+    trackWithMixpanel("PICK_IMAGE_STARTED")
+
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
@@ -80,6 +83,8 @@ export default function Page() {
   };
 
   const confirmImageAsync = async () => {
+    trackWithMixpanel("IMAGE_GENERATION_REQUESTED")
+
     setIsImageConfirmed(true);
     await handleUploadPhotoAsync();
   };
@@ -93,7 +98,7 @@ export default function Page() {
         headers: { "Content-Type": "application/json" },
       });
       setUploadResponseData(response.data);
-    } catch(e: unknown) {
+    } catch (e: unknown) {
       setError(e);
     }
     setIsLoading(false);
