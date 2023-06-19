@@ -60,7 +60,7 @@ export default function HomePage({
         <ExternalLink
           theme="clear"
           width={57}
-          href="https://linkedin.com/company/hymaia/"
+          href="https://www.linkedin.com/company/hymaia?follow=true"
         >
           <View style={styles.socialButton}>
             <LinkedInLogo />
@@ -70,7 +70,7 @@ export default function HomePage({
         <ExternalLink
           theme="clear"
           width={57}
-          href="https://www.youtube.com/@hymaia"
+          href="https://www.youtube.com/@hymaia/?sub_confirmation=1"
         >
           <View style={styles.socialButton}>
             <YouTubeLogo />
