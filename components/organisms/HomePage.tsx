@@ -18,40 +18,32 @@ export default function HomePage({
   const faqUrl = Constants.expoConfig.extra.faqUrl;
   const programmeUrl = Constants.expoConfig.extra.programmeUrl;
   const feedbackUrl = Constants.expoConfig.extra.feedbackUrl;
-  
+
   return (
     <View style={styles.container}>
       <PartnersLogo />
-      <AppLogo />
+      <View style={styles.versionNumber}>
+        <AppLogo />
+        <div>{Constants.expoConfig.extra.versionNumber}</div>
+      </View>
       <View style={styles.mainButtonsContainer}>
         <Button
           theme="pink"
           onPress={onTakeAPicturePress}
           label="Take a Picture"
         />
-        <ExternalLink
-          theme="bordered-white"
-          href={faqUrl}
-        >
+        <ExternalLink theme="bordered-white" href={faqUrl}>
           FAQ
         </ExternalLink>
       </View>
       <View style={styles.socialButtons}>
-        <ExternalLink
-          theme="clear"
-          width={57}
-          href={programmeUrl}
-        >
+        <ExternalLink theme="clear" width={57} href={programmeUrl}>
           <View style={styles.socialButton}>
             <ProgrammeLogo />
             <Text>Programme</Text>
           </View>
         </ExternalLink>
-        <ExternalLink
-          theme="clear"
-          width={57}
-          href={feedbackUrl}
-        >
+        <ExternalLink theme="clear" width={57} href={feedbackUrl}>
           <View style={styles.socialButton}>
             <FeedbackLogo />
             <Text>Feedback</Text>
@@ -87,6 +79,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  versionNumber: {
+    alignItems: "center",
+    fontWeight: "bold",
+    fontFamily: "'Open Sans', sans-serif",
+    fontSize: 8,
+    color: "white",
   },
   mainButtonsContainer: {
     rowGap: 8,

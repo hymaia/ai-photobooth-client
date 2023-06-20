@@ -29,6 +29,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
+      "versionNumber": "1.1",
       "faqUrl": "https://www.hymaia.com/faq-generative-ia-photobooth",
       "programmeUrl": "https://www.hymaia.com/event/evenement-special-ethical-data-ai",
       "feedbackUrl": "https://forms.gle/m6bpqi6yAohn72Rg6",
