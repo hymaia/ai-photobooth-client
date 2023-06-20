@@ -27,10 +27,16 @@ app.use(function (req, res, next) {
 });
 
 app.post("/prod/image", upload.single("photo"), (req, res) => {
-  res.status(200).json({
-    file_name: "a",
-    generated_images: b64Image
-  });
+  res.status(200).json({generated_images: [{
+    fileName: "a",
+    data: b64Image
+  },{
+    fileName: "a",
+    data: b64Image
+  },{
+    fileName: "a",
+    data: b64Image
+  }]});
 });
 
 app.listen(process.env.PORT || 3000, () => {
