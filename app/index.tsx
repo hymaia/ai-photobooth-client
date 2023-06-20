@@ -27,8 +27,7 @@ export default function Page() {
   const [prompt, setPrompt] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadResponseData, setUploadResponseData] = useState<{
-    file_name: string;
-    generated_images: string;
+    generated_images: { fileName: string, data: string }[];
   } | null>(null);
   const [error, setError] = useState<unknown | null>(null);
 

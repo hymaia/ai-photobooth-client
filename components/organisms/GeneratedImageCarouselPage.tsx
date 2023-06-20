@@ -11,8 +11,7 @@ export default function GeneratedImageCarouselPage({
   reset,
 }: {
   uploadResponseData: {
-    file_name: string;
-    generated_images: string;
+    generated_images: { fileName: string; data: string }[];
   };
   reset: () => void;
 }) {
@@ -21,20 +20,22 @@ export default function GeneratedImageCarouselPage({
   >(null);
 
   const onSaveImage = () => {
-    console.log("save img")
+    const index = selectedCarouselIndex ?? 0;
     if (uploadResponseData?.generated_images) {
       downloadB64Image(
-        uploadResponseData.generated_images,
-        uploadResponseData.file_name ?? "no-name"
+        uploadResponseData.generated_images[index].data,
+        uploadResponseData.generated_images[index].fileName
       );
     }
   };
 
   const onShareImage = () => {
-    console.log(uploadResponseData?.generated_images);
+    const index = selectedCarouselIndex ?? 0;
     if (uploadResponseData?.generated_images) {
-      console.log(uploadResponseData?.generated_images);
-      shareContent(uploadResponseData.generated_images, "Today at the #HymaDay");
+      shareContent(
+        uploadResponseData.generated_images[index].data,
+        "Today at the #HymaDay"
+      );
     }
   };
 
@@ -43,16 +44,12 @@ export default function GeneratedImageCarouselPage({
       <Button theme="white" icon="home" onPress={reset} label="Home" />
       <Carousel
         images={
-          uploadResponseData?.generated_images
-            ? [
-                {
-                  fileName: uploadResponseData?.file_name,
-                  image: uploadResponseData.generated_images,
-                },
-              ]
-            : []
+          uploadResponseData?.generated_images.map(({ fileName, data }) => ({
+            fileName,
+            image: data,
+          })) ?? []
         }
-        onSelectIndex={(setSelectedCarouselIndex)}
+        onSelectIndex={setSelectedCarouselIndex}
       />
       <View style={styles.optionsContainer}>
         <View style={styles.optionsRow}>
@@ -73,7 +70,7 @@ export const styles = StyleSheet.create({
   },
   optionsContainer: {
     alignItems: "center",
-    paddingVertical: 24
+    paddingVertical: 24,
   },
   optionsRow: {
     flex: 1,
