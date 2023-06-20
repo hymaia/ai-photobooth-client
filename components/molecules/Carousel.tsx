@@ -43,7 +43,13 @@ export default function Carousel({
 }
 
 const styles = StyleSheet.create({
-  container: { },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "stretch",
+
+  },
   carousel: {
     display: "flex",
     flexDirection: "row",

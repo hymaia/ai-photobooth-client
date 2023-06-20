@@ -67,6 +67,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
+    alignSelf: "stretch",
   },
   optionsContainer: {
     alignItems: "center",
